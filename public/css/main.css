@@ -1,0 +1,23 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    height: 100vh;
+    color: white;
+    
+}
+
+:root{
+    font-size: 62.5%;
+}
+
+body, input, button, textarea{
+    font-size: 18px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400;
+    /*simplificado// font:400 18px/1 'Nunito', sans-serif;*/
+    line-height: 1;
+}

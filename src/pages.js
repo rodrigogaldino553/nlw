@@ -1,5 +1,5 @@
 //const orphanages = require('./database/fakedata.js')
-const db = require('./database/db')
+
 const Database = require('./database/db')
 const saveOrphanage = require('./database/saveOrphanage')
 
@@ -21,11 +21,7 @@ module.exports = {
 
             //usar um operador ternario aqui
             orphanage.open_on_weekends == "0" ? orphanage.open_on_weekends = false : orphanage.open_on_weekends = true
-            /*if (orphanage.open_on_weekends == "0") {
-                orphanage.open_on_weekends = false
-            } else {
-                orphanage.open_on_weekends = true
-            }*/
+           
 
             return res.render('orphanage', { orphanage })
         } catch (error) {

@@ -45,12 +45,12 @@ function addPhotoField() {
 
 }
 
-function deleteField(event){
+function deleteField(event) {
     const span = event.currentTarget
 
     const fieldsContainer = document.querySelectorAll('.new-upload')
-    
-    if(fieldsContainer.length < 2){
+
+    if (fieldsContainer.length < 2) {
         span.parentNode.children[0].value = ""
         return
     }
@@ -61,11 +61,11 @@ function deleteField(event){
 
 }
 
-function toggleSelect(event){
+function toggleSelect(event) {
     document.querySelectorAll('.button-select button')
-    .forEach((button)=>{
-        button.classList.remove('active')
-    })
+        .forEach((button) => {
+            button.classList.remove('active')
+        })
 
     const button = event.currentTarget
     button.classList.add('active')
@@ -75,6 +75,14 @@ function toggleSelect(event){
     input.value = button.dataset.value
 }
 
+function validate(event) {
+    //verificar se ta tudo preenchido
+    const needMap = true
+    if (needMap) {
+        //event.preventDefault()//nao evia o formulario
+        alert('selecione um ponto no mapa')
+    }
 
+}
 
 

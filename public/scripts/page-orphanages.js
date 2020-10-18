@@ -29,6 +29,7 @@ function getLocation() {
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         initialize()
         getCityName(lat, lng)
+        message()
     })
 
 }
@@ -42,9 +43,21 @@ const icon = L.icon({
     popupAnchor: [170, 2]
 })
 
-function start() {
+function message() {
     const message = location.search.slice(1).split('=')[1]//.split('&').split('=')[1]
-    alert(message.replace(/%20/g, ' '))
+
+    if (message != undefined) {
+        alert(message.replace(/%20/g, ' '))
+    }
+}
+
+function customAlert(message){
+    const customAlert = document.querySelector('.hide-container')
+
+    customAlert.classList.remove('hide-container')
+    customAlert.classList.add('custom-alert')
+
+    //customAlert.innerHTML = 'Hello world!'
 }
 
 function addMarker({ id, name, lat, lng }) {
@@ -78,4 +91,4 @@ function initialize() {
 }
 
 getLocation()
-start()
+

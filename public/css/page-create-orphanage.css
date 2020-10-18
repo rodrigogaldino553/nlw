@@ -20,7 +20,9 @@ main{
     border-radius: 0 0 20px 20px;
 }
 
-
+.green-border{
+    border: 1px solid#a1e9c5;
+}
 
 
 

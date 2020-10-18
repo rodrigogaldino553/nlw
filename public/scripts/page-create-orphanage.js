@@ -1,8 +1,24 @@
-const map = L.map('mapid').setView([-27.222633, -49.6455874], 15);
+var map
+function getLocation() {
+    //para pegar a posicao do usuario
+    let lat = 0
+    let lng = 0
+    navigator.geolocation.getCurrentPosition((position) => {
+        lat = position.coords.latitude
+        lng = position.coords.longitude
+        console.log(`${lat}, ${lng}`)
+        map = L.map('mapid').setView([lat, lng], 25)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        initialize()
+    })
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+}
 
-//create map
+
+function start() {
+    const message = location.search.slice(1).split('=')[1]//.split('&').split('=')[1]
+    alert(message.replace('%20', ' '))
+}
 
 const icon = L.icon({
     iconUrl: "/images/map-marker.svg",
@@ -13,19 +29,23 @@ const icon = L.icon({
 
 let marker;
 
-map.on('click', (event) => {
-    const lat = event.latlng.lat;
-    const lng = event.latlng.lng;
+function initialize() {
+    map.on('click', (event) => {
+        const lat = event.latlng.lat;
+        const lng = event.latlng.lng;
 
-    document.querySelector('[name="lat"]').value = lat
-    document.querySelector('[name="lng"]').value = lng
+        document.querySelector('[name="lat"]').value = lat
+        document.querySelector('[name="lng"]').value = lng
 
 
-    marker && map.removeLayer(marker)
-    marker = L.marker([lat, lng], { icon })
-        .addTo(map)
-})
+        marker && map.removeLayer(marker)
+        marker = L.marker([lat, lng], { icon })
+            .addTo(map)
 
+        document.querySelector('.map-container').classList.add('green-border')
+
+    })
+}
 
 function addPhotoField() {
     const container = document.querySelector('#images')
@@ -77,12 +97,15 @@ function toggleSelect(event) {
 
 function validate(event) {
     //verificar se ta tudo preenchido
-    const needMap = true
-    if (needMap) {
-        //event.preventDefault()//nao evia o formulario
+    //const needMap = true
+    const lat = document.querySelector('[name="lat"]').value
+    if (lat == '') {
+        event.preventDefault()//nao evia o formulario
         alert('selecione um ponto no mapa')
     }
 
 }
 
 
+getLocation()
+start()

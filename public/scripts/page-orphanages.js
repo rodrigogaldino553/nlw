@@ -1,8 +1,40 @@
-const map = L.map('mapid').setView([-27.222633, -49.6455874], 15);
+//const { response } = require("express")
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+//var map = L.map('mapid').setView([-27.222633, -49.6455874], 15);
+var map
 
-//create map
+async function getCityName(lat, lng) {
+    try {
+        const url = `https://geocode.xyz/${lat},${lng}?json=1`
+        const data = await fetch(url).then(response => response.json())
+        console.log(data)
+        document.getElementById('city').innerHTML = data.region.split(',')[0]
+        document.getElementById('state').innerHTML = data.region.split(',')[1]
+    } catch (error) {
+        alert('Não foi possível pegar sua localização')
+    }
+}
+
+
+function getLocation() {
+    //para pegar a posicao do usuario
+    let lat = 0
+    let lng = 0
+    navigator.geolocation.getCurrentPosition((position) => {
+        lat = position.coords.latitude//-27.222633//
+        lng = position.coords.longitude//-49.6455874
+        console.log(`${lat}, ${lng}`)
+
+        map = L.map('mapid').setView([lat, lng], 15)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        initialize()
+        getCityName(lat, lng)
+        message()
+    })
+
+}
+
+
 
 const icon = L.icon({
     iconUrl: "/images/map-marker.svg",
@@ -11,8 +43,24 @@ const icon = L.icon({
     popupAnchor: [170, 2]
 })
 
+function message() {
+    const message = location.search.slice(1).split('=')[1]//.split('&').split('=')[1]
 
-function addMarker({id, name, lat, lng}){
+    if (message != undefined) {
+        alert(message.replace(/%20/g, ' '))
+    }
+}
+
+function customAlert(message){
+    const customAlert = document.querySelector('.hide-container')
+
+    customAlert.classList.remove('hide-container')
+    customAlert.classList.add('custom-alert')
+
+    //customAlert.innerHTML = 'Hello world!'
+}
+
+function addMarker({ id, name, lat, lng }) {
 
     const popup = L.popup({
         closeButton: false,
@@ -28,14 +76,19 @@ function addMarker({id, name, lat, lng}){
 
 }
 
-const orphanagesSpan = document.querySelectorAll('.orphanages span')
-orphanagesSpan.forEach(span => {
-    const orphanage = {
-        id:span.dataset.id,
-        name:span.dataset.name,
-        lat:span.dataset.lat,
-        lng:span.dataset.lng
-    }
-    addMarker(orphanage)
-    
-})
+function initialize() {
+    const orphanagesSpan = document.querySelectorAll('.orphanages span')
+    orphanagesSpan.forEach(span => {
+        const orphanage = {
+            id: span.dataset.id,
+            name: span.dataset.name,
+            lat: span.dataset.lat,
+            lng: span.dataset.lng
+        }
+        addMarker(orphanage)
+
+    })
+}
+
+getLocation()
+

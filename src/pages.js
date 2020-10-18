@@ -1,5 +1,5 @@
 //const orphanages = require('./database/fakedata.js')
-const db = require('./database/db')
+
 const Database = require('./database/db')
 const saveOrphanage = require('./database/saveOrphanage')
 
@@ -20,11 +20,8 @@ module.exports = {
             orphanage.firstImage = orphanage.images[0]
 
             //usar um operador ternario aqui
-            if (orphanage.open_on_weekends == "0") {
-                orphanage.open_on_weekends = false
-            } else {
-                orphanage.open_on_weekends = true
-            }
+            orphanage.open_on_weekends == "0" ? orphanage.open_on_weekends = false : orphanage.open_on_weekends = true
+           
 
             return res.render('orphanage', { orphanage })
         } catch (error) {
@@ -54,7 +51,7 @@ module.exports = {
     async saveOrphanage(req, res) {
         const fields = req.body
         if (Object.values(fields).includes('')) {
-            return res.send()
+            return res.redirect('/create-orphanage' + '?message=Preencha todos os campos!')
         }
         try {
             const db = await Database
@@ -70,10 +67,10 @@ module.exports = {
                 open_on_weekends: fields.open_on_weekends
             })
             
-            return res.redirect('/orphanages')
+            return res.redirect('/orphanages' + '?message=Salvo com sucesso!!')
         } catch (error) {
             console.log('erro no bd!')
-            return res.send('Erro no bd!')
+            return res.redirect('/orphanages' + '?message=Erro no bd!')
         }
     }
 

@@ -3,14 +3,14 @@
 //var map = L.map('mapid').setView([-27.222633, -49.6455874], 15);
 var map
 
-async function getCityName(lat, lng){
-    try{
-    const url = `https://geocode.xyz/${lat},${lng}?json=1`
-    const data = await fetch(url).then(response => response.json())
-console.log(data)
-    document.getElementById('city').innerHTML = data.region.split(',')[0]
-    document.getElementById('state').innerHTML = data.region.split(',')[1]
-    }catch(error){
+async function getCityName(lat, lng) {
+    try {
+        const url = `https://geocode.xyz/${lat},${lng}?json=1`
+        const data = await fetch(url).then(response => response.json())
+        console.log(data)
+        document.getElementById('city').innerHTML = data.region.split(',')[0]
+        document.getElementById('state').innerHTML = data.region.split(',')[1]
+    } catch (error) {
         alert('Não foi possível pegar sua localização')
     }
 }
@@ -24,13 +24,13 @@ function getLocation() {
         lat = position.coords.latitude//-27.222633//
         lng = position.coords.longitude//-49.6455874
         console.log(`${lat}, ${lng}`)
-        
+
         map = L.map('mapid').setView([lat, lng], 15)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         initialize()
         getCityName(lat, lng)
     })
-    
+
 }
 
 
@@ -63,18 +63,18 @@ function addMarker({ id, name, lat, lng }) {
 
 }
 
-function initialize(){
-const orphanagesSpan = document.querySelectorAll('.orphanages span')
-orphanagesSpan.forEach(span => {
-    const orphanage = {
-        id: span.dataset.id,
-        name: span.dataset.name,
-        lat: span.dataset.lat,
-        lng: span.dataset.lng
-    }
-    addMarker(orphanage)
+function initialize() {
+    const orphanagesSpan = document.querySelectorAll('.orphanages span')
+    orphanagesSpan.forEach(span => {
+        const orphanage = {
+            id: span.dataset.id,
+            name: span.dataset.name,
+            lat: span.dataset.lat,
+            lng: span.dataset.lng
+        }
+        addMarker(orphanage)
 
-})
+    })
 }
 
 getLocation()

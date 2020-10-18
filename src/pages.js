@@ -51,7 +51,7 @@ module.exports = {
     async saveOrphanage(req, res) {
         const fields = req.body
         if (Object.values(fields).includes('')) {
-            return res.redirect('/create-orphanage')
+            return res.redirect('/create-orphanage' + '?message=Preencha todos os campos!')
         }
         try {
             const db = await Database
@@ -67,10 +67,10 @@ module.exports = {
                 open_on_weekends: fields.open_on_weekends
             })
             
-            return res.redirect('/orphanages')
+            return res.redirect('/orphanages' + '?message=Salvo com sucesso!!')
         } catch (error) {
             console.log('erro no bd!')
-            return res.send('Erro no bd!')
+            return res.redirect('/orphanages' + '?message=Erro no bd!')
         }
     }
 

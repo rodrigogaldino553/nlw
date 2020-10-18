@@ -11,11 +11,14 @@ function getLocation() {
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         initialize()
     })
-    
+
 }
 
-getLocation()
 
+function start() {
+    const message = location.search.slice(1).split('=')[1]//.split('&').split('=')[1]
+    alert(message.replace('%20', ' '))
+}
 
 const icon = L.icon({
     iconUrl: "/images/map-marker.svg",
@@ -26,22 +29,22 @@ const icon = L.icon({
 
 let marker;
 
-function initialize(){
-map.on('click', (event) => {
-    const lat = event.latlng.lat;
-    const lng = event.latlng.lng;
+function initialize() {
+    map.on('click', (event) => {
+        const lat = event.latlng.lat;
+        const lng = event.latlng.lng;
 
-    document.querySelector('[name="lat"]').value = lat
-    document.querySelector('[name="lng"]').value = lng
+        document.querySelector('[name="lat"]').value = lat
+        document.querySelector('[name="lng"]').value = lng
 
 
-    marker && map.removeLayer(marker)
-    marker = L.marker([lat, lng], { icon })
-        .addTo(map)
+        marker && map.removeLayer(marker)
+        marker = L.marker([lat, lng], { icon })
+            .addTo(map)
 
-    document.querySelector('.map-container').classList.add('green-border')
+        document.querySelector('.map-container').classList.add('green-border')
 
-})
+    })
 }
 
 function addPhotoField() {
@@ -104,3 +107,5 @@ function validate(event) {
 }
 
 
+getLocation()
+start()

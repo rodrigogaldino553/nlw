@@ -4,10 +4,15 @@
 var map
 
 async function getCityName(lat, lng){
+    try{
     const url = `https://geocode.xyz/${lat},${lng}?json=1`
     const data = await fetch(url).then(response => response.json())
-
-    document.getElementById('city').value = data.osmtags.name
+console.log(data)
+    document.getElementById('city').innerHTML = data.region.split(',')[0]
+    document.getElementById('state').innerHTML = data.region.split(',')[1]
+    }catch(error){
+        alert('Não foi possível pegar sua localização')
+    }
 }
 
 
@@ -19,15 +24,16 @@ function getLocation() {
         lat = position.coords.latitude//-27.222633//
         lng = position.coords.longitude//-49.6455874
         console.log(`${lat}, ${lng}`)
-        getCityName(lat, lng)
+        
         map = L.map('mapid').setView([lat, lng], 15)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         initialize()
+        getCityName(lat, lng)
     })
     
 }
 
-getLocation()
+
 
 const icon = L.icon({
     iconUrl: "/images/map-marker.svg",
@@ -36,6 +42,10 @@ const icon = L.icon({
     popupAnchor: [170, 2]
 })
 
+function start() {
+    const message = location.search.slice(1).split('=')[1]//.split('&').split('=')[1]
+    alert(message.replace(/%20/g, ' '))
+}
 
 function addMarker({ id, name, lat, lng }) {
 
@@ -66,3 +76,6 @@ orphanagesSpan.forEach(span => {
 
 })
 }
+
+getLocation()
+start()

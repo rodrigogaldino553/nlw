@@ -1,11 +1,11 @@
 <h1 align="center">
-    <img alt="Happy" title="Happy" src="public/layout/logo.svg" />
+    <img alt="Happy" title="Happy" src="public/images/logo.svg" />
 </h1>
 
 <br>
 
 <p align="center">
-  <img alt="Happy" src="public/layout/happy.png" width="100%">
+  <img alt="Happy" src="public/images/happy.png" width="100%">
 </p>
 
 ## 🚀 Technology

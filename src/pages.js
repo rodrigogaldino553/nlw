@@ -51,7 +51,7 @@ module.exports = {
     async saveOrphanage(req, res) {
         const fields = req.body
         if (Object.values(fields).includes('')) {
-            return res.send()
+            return res.redirect('/create-orphanage')
         }
         try {
             const db = await Database

@@ -1,26 +1,33 @@
+//const { response } = require("express")
+
 //var map = L.map('mapid').setView([-27.222633, -49.6455874], 15);
 var map
+
+async function getCityName(lat, lng){
+    const url = `https://geocode.xyz/${lat},${lng}?json=1`
+    const data = await fetch(url).then(response => response.json())
+
+    document.getElementById('city').value = data.osmtags.name
+}
+
+
 function getLocation() {
     //para pegar a posicao do usuario
     let lat = 0
     let lng = 0
     navigator.geolocation.getCurrentPosition((position) => {
-        lat = position.coords.latitude
-        lng = position.coords.longitude
+        lat = position.coords.latitude//-27.222633//
+        lng = position.coords.longitude//-49.6455874
         console.log(`${lat}, ${lng}`)
+        getCityName(lat, lng)
         map = L.map('mapid').setView([lat, lng], 15)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         initialize()
     })
-    //map = L.map('mapid').setView([lat, lng], 15)//([-27.222633, -49.6455874], 15);
-
+    
 }
 
 getLocation()
-
-//L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
-//create map
 
 const icon = L.icon({
     iconUrl: "/images/map-marker.svg",
